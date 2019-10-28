@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Calculator{% endblock %}
+
+{% block body %}
+
+    <h1>Calculator</h1>
+    <p>Here comes the Calculator</p>
+   <form action="">
+    <h4>Gebäude & Ladeinfrastruktur</h4>
+    <div>
+        <label for="inputHausanschluss">Verfügbarer Hausanschluss in kW</label>
+        <input type="number" id="inputHausanschluss" name="hausanschluss">
+    </div>
+    <div>
+        <label for="inputGebäudelast">Gebäudelast in kW</label>
+        <input type="number" id="inputHausanschluss" name="hausanschluss">
+    </div>
+    <div>
+        Ergebnis:___
+    </div>
+    
+       <h4>Fahrzeug & Fahrverhalten</h4>
+       <h4>Ladezeit</h4>
+       <h4>Ergebnis</h4>
+   </form>
+   
+{% endblock %}

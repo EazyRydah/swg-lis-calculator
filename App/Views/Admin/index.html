@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+
+    <h1>Admin</h1>
+
+    <a href="/signup/new">Neuen Benutzer anlegen</a>
+
+    {% if users %}
+
+        <h3>All Nutzer</h3>
+
+        {% for user in users %}
+            <li><a href="/signup/{{ user.id }}/delete">{{ user.name|e }}</a></li>
+        {% endfor %}
+
+    {% endif %}
+    
+{% endblock %}

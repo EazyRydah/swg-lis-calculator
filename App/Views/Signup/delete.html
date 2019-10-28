@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Nutzer{% endblock %}
+
+{% block body %}
+
+    <h1>Nutzer löschen</h1>
+
+    <form method="post" action="/signup/{{ user.id }}/confirmDeletion" id="formDelete">
+
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>E-Mail:</strong>  {{ user.email }}</p>
+        
+        <button type="submit">Löschen</button>
+
+    </form>
+
+{% endblock %}
