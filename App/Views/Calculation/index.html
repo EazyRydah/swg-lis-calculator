@@ -4,15 +4,12 @@
 
 {% block footer %}
 
-<!--     <script>
+    <script>
 
         $(document).ready(function(){
             
-            if ($('#formCalculator').validate()) {
-                
-            }
-
-            $('#formCalculator').validate({
+           
+            $('#formCalculation').validate({
                 rules: {
                     hausanschluss: 'required',
                     gebäudelast: 'required',
@@ -60,7 +57,7 @@
             
         });
 
-    </script> -->
+    </script>
 
 {% endblock %}
 
@@ -77,7 +74,7 @@
         </ul>
     {% endif %}
 
-   <form action="/calculation/calculate" method="post" id="formCalculator">
+   <form action="/calculation/calculate" method="post" id="formCalculation">
 
         <h3>Gebäude & Ladeinfrastruktur</h3>
         <div>
@@ -186,7 +183,7 @@
 
    </form>
 
-    {% if calculation.anzahlStellplätzeDynamisch %}
+    {% if calculation.isExportable %}
 
     <form action="/calculation/export" method="post" target="__blank">
         

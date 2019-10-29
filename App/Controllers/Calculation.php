@@ -58,16 +58,7 @@ class Calculation extends Authenticated
 
         $calculation = new Calculator($_POST);
 
-        if ($calculation->calculate()) {
-
-            var_dump($calculation);
-
-        } else {
-
-            View::renderTemplate('Calculation/index.html', [
-                'calculation' => $calculation
-            ]);
-        }
+        $calculation->exportPDF();
                 
     }
 }
