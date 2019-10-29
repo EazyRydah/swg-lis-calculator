@@ -10,11 +10,11 @@
     <nav>
         <ul>
             <li><a href="/">Start</a></li>
-            <li><a href="/calculator">Neue Berechnung</a></li>
             {% if current_user.is_admin %}
                 <li><a href="/admin">Nutzerverwaltung</a></li>
             {% endif %}
             {% if current_user %}
+                <li><a href="/calculator">LIS Berechnung</a></li>
                 <li><a href="/profile/show">Profil</a></li>
                 <li><a href="/logout">Ausloggen</a></li>
             {% endif %}
