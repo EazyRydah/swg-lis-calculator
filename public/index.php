@@ -33,7 +33,7 @@ $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('login', ['controller' => 'Login', 'action' => 'new']);
 $router->add('logout', ['controller' => 'Login', 'action' => 'destroy']);
 $router->add('admin', ['controller' => 'Admin', 'action' => 'index']);
-$router->add('calculator', ['controller' => 'Calculator', 'action' => 'index']);
+$router->add('calculation', ['controller' => 'Calculation', 'action' => 'index']);
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
     
