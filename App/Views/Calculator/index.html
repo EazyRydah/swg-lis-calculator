@@ -1,28 +1,124 @@
 {% extends "base.html" %}
 
-{% block title %}Calculator{% endblock %}
+{% block title %}LIS Berechnung{% endblock %}
 
 {% block body %}
 
-    <h1>Calculator</h1>
-    <p>Here comes the Calculator</p>
-   <form action="">
-    <h4>Gebäude & Ladeinfrastruktur</h4>
-    <div>
-        <label for="inputHausanschluss">Verfügbarer Hausanschluss in kW</label>
-        <input type="number" id="inputHausanschluss" name="hausanschluss">
-    </div>
-    <div>
-        <label for="inputGebäudelast">Gebäudelast in kW</label>
-        <input type="number" id="inputHausanschluss" name="hausanschluss">
-    </div>
-    <div>
-        Ergebnis:___
-    </div>
-    
-       <h4>Fahrzeug & Fahrverhalten</h4>
-       <h4>Ladezeit</h4>
-       <h4>Ergebnis</h4>
+    <h1>LIS Berechnung</h1>
+
+    {% if calculation.errors is not empty %}
+        <p>Warnung:</p>
+        <ul>
+            {% for error in calculation.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+   <form action="/calculator/calculate" method="post">
+
+        <h3>Gebäude & Ladeinfrastruktur</h3>
+        <div>
+            <label for="inputHausanschluss">Verfügbarer Hausanschluss in kW</label>
+            <input type="number" id="inputHausanschluss" name="hausanschluss" step="0.1" min="0" value="{{ calculation.hausanschluss }}">
+        </div>
+        <div>
+            <label for="inputGebäudelast">Gebäudelast in kW</label>
+            <input type="number" id="inputHausanschluss" name="gebäudelast" step="0.1" min="0" value="{{ calculation.gebäudelast }}">
+        </div>
+        {% if calculation.anschlussLeistungLis %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.anschlussLeistungLis }}</strong>  kW für Ladeinfrastruktur</em>
+        </div>
+        {% endif %}
+        <br>
+        <div>
+            <label for="inputWirkleistungsfaktor">Wirkleistungsfaktor</label>
+            <input type="number" id="inputWirkleistungsfaktor" name="wirkleistungsfaktor" step="0.01" min="0" max="1" value="{{ calculation.wirkleistungsfaktor }}">
+        </div>
+        <div>
+            <label for="inputLadeleistungLis">Verfügbare AC-Ladeleistung in kW</label>
+            <input type="number" id="inputLadeleistungLis" name="ladeleistungLis" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungLis }}">
+        </div>
+        {% if calculation.anzahlStellplätzeStatisch %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.anzahlStellplätzeStatisch }}</strong> versorgbare Stellplätze im statischen Fall</em>
+        </div>
+        {% endif %}
+        
+        <h3>Fahrzeug & Fahrverhalten</h3>
+        <div>
+            <label for="inputJahresfahrleistung">Jährliche Fahrleistung in km</label>
+            <input type="number" id="inputJahresfahrleistung" name="jahresfahrleistung" step="1" min="0" value="{{ calculation.jahresfahrleistung }}">
+        </div>
+        <div>
+            <label for="inputAnzahlTage">Anzahl Tage (z.B. Werktage)</label>
+            <input type="number" id="inputAnzahlTage" name="anzahlTage" step="1" min="0" value="{{ calculation.anzahlTage }}">
+        </div>
+        {% if calculation.tagesfahrleistung %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.tagesfahrleistung }}</strong> km tägliche Fahrleistung</em>
+        </div>
+        {% endif %}
+        <br>
+        <div>
+            <label for="inputEnergieverbrauchFahrzeug">Energieverbrauch in kWh/100 km</label>
+            <input type="number" id="inputEnergieverbrauchFahrzeug" name="energieverbrauchFahrzeug" step="1" min="0" value="{{ calculation.energieverbrauchFahrzeug }}">
+        </div>
+        {% if calculation.nachladeBedarfTag %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.nachladeBedarfTag }}</strong> kWh täglichen Nachladebedarf</em>
+        </div>
+        {% endif %}
+
+       <h3>Ladezeit</h3>
+       <div>
+            <label for="inputLadeleistungFahrzeug">Fahrzeugseitige Ladeleistung in kW</label>
+            <input type="number" id="inputLadeleistungFahrzeug" name="ladeleistungFahrzeug" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungFahrzeug }}">
+        </div>
+        <div>
+            <label for="inputZusatzZeitLadeverlust">Zusatzzeit für Ladeverluste in h</label>
+            <input type="number" id="inputZusatzZeitLadeverlust" name="zusatzZeitLadeverlust" step="0.1" min="0" value="{{ calculation.zusatzZeitLadeverlust }}">
+        </div>
+        {% if calculation.nachladeBedarfZeit %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.nachladeBedarfZeit }}</strong> h zur Nachladung des täglichen Bedarfs</em>
+        </div>
+        {% endif %}
+        <br>
+        <div>
+            <label for="inputLadezeitraum">Verfügbarer Ladezeitraum in h</label>
+            <input type="number" id="inputLadezeitraum" name="ladezeitraum" step="0.1" min="0" value="{{ calculation.ladezeitraum }}">
+        </div>
+        <div>
+            <label for="inputFahrzeugwechselZeit">Zeit zum Fahrzeugwechsel in h</label>
+            <input type="number" id="inputFahrzeugwechselZeit" name="fahrzeugwechselZeit" step="0.01" min="0" value="{{ calculation.fahrzeugwechselZeit }}">
+        </div>
+        {% if calculation.anzahlNachladungen %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.anzahlNachladungen }}</strong> mögliche Nachladungen an einer LIS</em>
+        </div>
+        {% endif %}
+
+        <h3>Dynamisches Lastmanagement</h3>
+        <div>
+            <label for="inputNutzfaktor">Nutzfaktor (z.B. 0,7 privat; 0,9 gewerblich)</label>
+            <input type="number" id="inputNutzfaktor" name="nutzfaktor" step="0.01" min="0" max="1" value="{{ calculation.nutzfaktor }}">
+        </div>
+        {% if calculation.anzahlStellplätzeDynamisch %}
+        <div>
+            <em>Ergibt: <strong>{{ calculation.anzahlStellplätzeDynamisch }}</strong> versorgbare Stellplätze im dynamischen Fall</em>
+        </div>
+        {% endif %}
+
+        <br>
+
+        <button type="submit">Berechnen</button>
+
+        {% if calculation.errors is empty %}
+            <a href="#">PDF erstellen</a>
+        {% endif %}
+        
    </form>
    
 {% endblock %}
