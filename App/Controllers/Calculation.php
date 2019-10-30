@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Calculator;
+use \App\PDF;
 
 /**
  * Calculation controller
@@ -58,7 +59,9 @@ class Calculation extends Authenticated
 
         $calculation = new Calculator($_POST);
 
-        $calculation->exportPDF();
+        $html = PDF::getHTML($calculation);
+
+        PDF::createFromHTML($html, 'beratungsprotokoll-ladeinfrastruktur.pdf');
                 
     }
 }

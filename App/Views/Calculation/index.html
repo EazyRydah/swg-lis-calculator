@@ -4,60 +4,69 @@
 
 {% block footer %}
 
-    <script>
+<script>
 
-        $(document).ready(function(){
-            
-           
-            $('#formCalculation').validate({
-                rules: {
-                    hausanschluss: 'required',
-                    gebäudelast: 'required',
-                    wirkleistungsfaktor: {
-                        required: true,
-                        max: 1,
-                        step: 0.01
-                    },
-                    ladeleistungLis: {
-                        required: true,
-                        max: 22
-                    },
-                    jahresfahrleistung: 'required',
-                    anzahlTage: {
-                        required: true,
-                        max: 365,
-                        step: 1
-                    },
-                    energieverbrauchFahrzeug: {
-                        required: true,
-                        step: 0.1
-                    },
-                    ladeleistungFahrzeug: {
-                        required: true,
-                        max: 22
-                    },
-                    zusatzZeitLadeverlust: {
-                        required: true,
-                        step: 0.01 
-                    },
-                    fahrzeugwechselZeit: {
-                        required: true,
-                        step: 0.01 
-                    },
-                    ladezeitraum: 'required',
-                    nutzfaktor: {
-                        required: true,
-                        max: 1,
-                        step: 0.01
-                    }
+    $(document).ready(function(){
+        
+        $('#formCalculation').validate({
+            rules: {
+                ort:{
+                    required: true,
+                    maxlength: 27
+                },
+                objektBezeichnung: {
+                    required: true,
+                    maxlength: 15
+                },
+                objektStandort: {
+                    required: true,
+                    maxlength: 15
+                },
+                hausanschluss: 'required',
+                gebäudelast: 'required',
+                wirkleistungsfaktor: {
+                    required: true,
+                    max: 1,
+                    step: 0.01
+                },
+                ladeleistungLis: {
+                    required: true,
+                    max: 22
+                },
+                jahresfahrleistung: 'required',
+                anzahlTage: {
+                    required: true,
+                    max: 365,
+                    step: 1
+                },
+                energieverbrauchFahrzeug: {
+                    required: true,
+                    step: 0.1
+                },
+                ladeleistungFahrzeug: {
+                    required: true,
+                    max: 22
+                },
+                zusatzZeitLadeverlust: {
+                    required: true,
+                    step: 0.01 
+                },
+                fahrzeugwechselZeit: {
+                    required: true,
+                    step: 0.01 
+                },
+                ladezeitraum: 'required',
+                nutzfaktor: {
+                    required: true,
+                    max: 1,
+                    step: 0.01
                 }
-            });
-
-
-            
+            }
         });
+        
+    });
 
-    </script>
+</script>
 
 {% endblock %}
 
@@ -76,6 +85,21 @@
 
    <form action="/calculation/calculate" method="post" id="formCalculation">
 
+        <h3>Angaben zur Beratung</h3>
+        <div>
+            <label for="inputOrt">Ort der Beratung</label>
+            <input id="inputOrt" name="ort" value="{{ calculation.ort }}">
+        </div>
+       
+        <div>
+            <label for="inputObjektbezeichnung">Objekt-Bezeichnung</label>
+            <input id="inputObjektbezeichnung" name="objektBezeichnung" value="{{ calculation.objektBezeichnung }}">
+        </div>
+        <div>
+            <label for="inputStandort">Objekt-Standort</label>
+            <input id="inputStandort" name="objektStandort" value="{{ calculation.objektStandort }}">
+        </div>
+      
         <h3>Gebäude & Ladeinfrastruktur</h3>
         <div>
             <label for="inputHausanschluss">Verfügbarer Hausanschluss in kW</label>
@@ -186,7 +210,11 @@
     {% if calculation.isExportable %}
 
     <form action="/calculation/export" method="post" target="__blank">
-        
+           
+        <input type="hidden" name="ort" value="{{ calculation.ort }}">
+        <input type="hidden" name="objektBezeichnung" value="{{ calculation.objektBezeichnung }}">
+        <input type="hidden" name="objektStandort" value="{{ calculation.objektStandort }}">
+   
         <input type="hidden" name="hausanschluss" value="{{ calculation.hausanschluss }}">
         <input type="hidden" name="gebäudelast" value="{{ calculation.gebäudelast }}">
         <input type="hidden" name="anschlussLeistungLis" value="{{ calculation.anschlussLeistungLis }}">
