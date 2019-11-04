@@ -48,20 +48,20 @@ class Calculator extends \Core\Model
             // Gebäude & Ladeinfrastruktur
             $this->anschlussLeistungLis = $this->hausanschluss - $this->gebäudelast;
 
-            $this->anzahlStellplätzeStatisch = floor($this->wirkleistungsfaktor * $this->ladeleistungLis);
+            $this->anzahlStellplätzeStatisch = floor($this->leistungsfaktor * $this->anschlussLeistungLis/$this->ladeleistungLis);
 
             // Fahrzeug & Fahrzeugverhalten
             $this->tagesfahrleistung = round($this->jahresfahrleistung / $this->anzahlTage, 1);
 
-            $this->nachladeBedarfTag = round($this->tagesfahrleistung * $this->energieverbrauchFahrzeug / 100, 1);
+            $this->nachladeBedarfTag = round($this->tagesfahrleistung / 100 * $this->energieverbrauchFahrzeug, 1);
 
             // Ladezeit
-            $this->nachladeBedarfZeit = round(( $this->nachladeBedarfTag / $this->energieverbrauchFahrzeug ) + $this->zusatzZeitLadeverlust, 1);
+            $this->nachladeBedarfZeit = round($this->nachladeBedarfTag / $this->ladeleistungFahrzeug + $this->zusatzZeitLadeverlust, 1);
 
-            $this->anzahlNachladungen = round($this->ladezeitraum / ( $this->nachladeBedarfZeit + $this->fahrzeugwechselZeit ),1);
-
+            $this->anzahlNachladungen = floor($this->ladezeitraum / ( $this->nachladeBedarfZeit + $this->fahrzeugwechselZeit) );
+            
             // Dynamisches Lastmanagement
-            $this->anzahlStellplätzeDynamisch = floor($this->anzahlNachladungen * $this->anzahlStellplätzeStatisch * 1 / $this->nutzfaktor);
+            $this->anzahlStellplätzeDynamisch = floor($this->anzahlNachladungen * $this->anzahlStellplätzeStatisch * $this->nutzfaktor);
 
             $this->isExportable = true;
 
@@ -99,8 +99,8 @@ class Calculator extends \Core\Model
             $this->errors[] = 'Gebäudelast angeben';
         }
 
-        if ($this->wirkleistungsfaktor == '' ) {
-            $this->errors[] = 'Wirkleistungsfaktor angeben';
+        if ($this->leistungsfaktor == '' ) {
+            $this->errors[] = 'Leistungsfaktor angeben';
         }
 
         if ($this->ladeleistungLis == '' ) {

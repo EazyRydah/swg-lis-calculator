@@ -38,4 +38,15 @@ class Admin extends \Core\Controller
         ]);     
         
     }
+
+    /**
+     * Upload PDF
+     * 
+     * @return void
+     *   
+    */  
+    public function uploadPDFAction()
+    {
+        View::renderTemplate('PDF/upload.html');
+    }
 }

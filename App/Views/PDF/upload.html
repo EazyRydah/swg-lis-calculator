@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+{% block title %}PDF{% endblock %}
+
+{% block body %}
+
+    <h1>PDF</h1>
+
+    <a href="/uploads/statistik-anhang.pdf" target="__blank">Download</a>
+
+    <form method="post" action="/pdf/create" enctype="multipart/form-data">
+      
+        <div>
+            <label for="inputFile">PDF-Anhang</label>
+            <input type="file" id="inputFile" name="file" />
+        </div>
+
+        <button type="submit">Hochladen</button>
+        <a href="/admin">Zurück</a>
+
+    </form>
+
+{% endblock %}
