@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+{% block title %}PDF{% endblock %}
+
+{% block body %}
+
+    <h1>PDF</h1>
+
+    {% if pdf.errors is not empty %}
+    <p>Warnung:</p>
+    <ul>
+        {% for error in pdf.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+
+    {% if attachmentExists %}
+
+    <h2>Aktuellen Anhang herunterladen</h2>
+    <a href="/pdf/download" target="__blank">Download</a>
+    <a href="/pdf/delete">Löschen</a>
+
+    {% endif %}
+    <h2>Anhang hochladen</h2>
+    <form method="post" action="/pdf/create" enctype="multipart/form-data">
+      
+        <div>
+           <!--  <label for="inputFile">PDF-Anhang</label> -->
+            <input type="file" id="inputFile" name="file" />
+        </div>
+
+        <button type="submit">Hochladen</button>
+        <a href="/admin">Zurück</a>
+
+    </form>
+
+
+{% endblock %}

@@ -5,6 +5,8 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\User;
+use \App\Models\PDFDocument;
+use \App\Flash;
 
 /**
  * PDF controller
@@ -23,88 +25,86 @@ class PDF extends \Core\Controller
     }
 
     /**
-     * Upload PDF
+     * render upload PDF page
      * 
      * @return void
      *   
     */  
-    public function uploadAction()
+    public function newAction()
     {
-        View::renderTemplate('PDF/upload.html');
+        View::renderTemplate('PDF/new.html', [
+            'attachmentExists' => PDFDocument::attachmentExists()
+        ]);
     }
 
     /**
-     * Upload PDF
+     * Create new PDF
      * 
      * @return void
      *   
     */  
     public function createAction()
     {
-        var_dump($_FILES);
+        
+        $pdf = new PDFDocument($_FILES);
 
-        if (empty($_FILES)) {
-            throw new Exception('Invalid upload');
-        }
+        if ($pdf->upload()) {
 
-        switch ($_FILES['file']['error']) {
-            case UPLOAD_ERR_OK:
-                break;
+            Flash::addMessage('Änderung gespeichert');
 
-            case UPLOAD_ERR_NO_FILE:
-                throw new \Exception("No file uploaded.");
-                break;
-
-          /*   case UPLOAD_ERR_INI_SIZE:
-                throw new \Exception("File is too large (from the server settings)");
-                break; */
-
-            default:
-                throw new \Exception("An Error occured.");
-        }
-
-        if ($_FILES['file']['size'] > 5000000) {
-            throw new \Exception("File is too large.");
-        }
-
-        $mime_types = ['application/pdf'];
-
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime_type = finfo_file($finfo, $_FILES['file']['tmp_name']);
-
-        if ( ! in_array($mime_type, $mime_types)) {
-
-            throw new \Exception("Invalid file type.");
-
-        }
-
-
-
-        // Upload file
-        $pathinfo = pathinfo($_FILES['file']['name']);
-
-       /*  $base = $pathinfo['filename'];
-
-        $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base);
-
-        $filename = $base . '.' . $pathinfo['extension']; */
-
-        $filename = 'statistik-anhang' . '.' .  $pathinfo['extension'];
-
-        $destination = "./uploads/$filename";
-
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
-            
-            echo "File uploaded successfully";
+            $this->redirect('/admin');
 
         } else {
 
-            throw new \Exception('Unable to move uploaded file');
+            View::renderTemplate('PDF/new.html', [
+                'pdf' => $pdf
+            ]);
+
+        }
+  
+    }
+
+    /**
+     * Download existing PDF attachment
+     * 
+     * @return void
+     *   
+    */  
+    public function downloadAction()
+    {
+        if (PDFDocument::attachmentExists()) {
+
+            $this->redirect('/uploads/statistik-anhang.pdf');
+
+        } else {
+
+            Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
+
+            View::renderTemplate('PDF/new.html');
 
         }
     }
 
-    
+    /**
+     * Delete existing PDF attachment
+     * 
+     * @return void
+     *   
+    */  
+    public function deleteAction()
+    {
+        if (PDFDocument::attachmentExists()) {
 
+            PDFDocument::deleteAttachment();
 
+            $this->redirect('/pdf/new');
+
+        } else {
+
+            Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
+
+            View::renderTemplate('PDF/new.html');
+
+        }
+    }    
 }

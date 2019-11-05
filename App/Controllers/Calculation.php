@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Calculator;
-use \App\PDF;
+use \App\Models\PDFDocument;
 
 /**
  * Calculation controller
@@ -56,12 +56,12 @@ class Calculation extends Authenticated
     */  
     public function exportAction()
     {
-
+        
         $calculation = new Calculator($_POST);
 
-        $html = PDF::getHTML($calculation);
+        $html = PDFDocument::getHtmlFromCalculation($calculation);        
 
-        PDF::createFromHTML($html, 'beratungsprotokoll-ladeinfrastruktur.pdf');
+        PDFDocument::exportToBrowser('beratungsprotokoll-lis.pdf', $html); 
                 
     }
 }

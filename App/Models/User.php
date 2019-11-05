@@ -69,7 +69,7 @@ class User extends \Core\Model
      * 
      * @return void
      * */  
-    public function validate()
+    protected function validate()
     {
         // name
         if ($this->name == ''){

@@ -8,5 +8,5 @@ RewriteRule ^(.*)$ index.php?$1 [L,QSA]
 # Restrict filesize for pdf upload
 #php_value upload_max_filesize 5M
 
-# Turn off to prevent post-max-size error in production 
+# Turn off to prevent post-max-size error. in production usually off by default
 #php_flag display_startup_errors off
