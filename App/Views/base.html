@@ -3,38 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" 
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
+      crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><a href="/">Start</a></li>
-            {% if current_user.is_admin %}
-                <li><a href="/admin">Administration</a></li>
-            {% endif %}
-            {% if current_user %}
-                <li><a href="/calculation">LIS Berechnung</a></li>
-                <li><a href="/profile">Profil</a></li>
-                <li><a href="/logout">Ausloggen</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+<div class="container">
 
-    {% for message in flash_messages %}
-        <div class="alert alert-{{ message.type }}">
-            {{ message.body }}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="/img/swg_logo.png"  height="70" width="auto" class="d-inline-block align-top" alt="">
+        </a>
+       
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                {% if current_user %}
+                
+                    {% if current_user.is_admin %}
+                         <a class="nav-item nav-link" href="/admin">Administration</a>
+                    {% endif %}
+                    <a class="nav-item nav-link" href="/calculation">LIS Berechnung</a>
+                    <a class="nav-item nav-link" href="/profile">Profil</a>
+                    <a class="nav-item nav-link" href="/logout">Ausloggen</a>
+             
+                {% else %}
+
+                <a class="nav-item nav-link" href="/login">Einloggen</a>
+                {% endif %}
+            </div>
         </div>
-    {% endfor %}
+        
+    </nav>
+    
+<!-- 
+        <nav>
+            <ul>
+                <a href="/">Start</a>
+                {% if current_user.is_admin %}
+                    <a href="/admin">Administration</a>
+                {% endif %}
+                {% if current_user %}
+                    <a href="/calculation">LIS Berechnung</a>
+                    <a href="/profile">Profil</a>
+                    <a href="/logout">Ausloggen</a>
+                {% endif %}
+            </ul>
+        </nav> -->
 
-    {% block body %}
-    {% endblock %}
+        {% for message in flash_messages %}
+            <div class="alert alert-{{ message.type }}">
+                {{ message.body }}
+            </div>
+        {% endfor %}
+
+        {% block body %}
+        {% endblock %}
+   
+    </div>
 
     <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    
 
     {% block footer %}
     {% endblock %}

@@ -73,7 +73,7 @@
 {% block body %}
 
     <h1>LIS Berechnung</h1>
-
+    <hr>
     {% if calculation.errors is not empty %}
         <p>Warnung:</p>
         <ul>
@@ -86,130 +86,203 @@
    <form action="/calculation/calculate" method="post" id="formCalculation">
 
         <h3>Angaben zur Beratung</h3>
-        <div>
-            <label for="inputOrt">Ort der Beratung</label>
-            <input id="inputOrt" name="ort" value="{{ calculation.ort }}">
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small"  for="inputOrt">Ort der Beratung</label>
+                    <input id="inputOrt" name="ort" value="{{ calculation.ort }}" class="form-control" placeholder="z.B. Hauptverwaltung Stadtwerke Göttingen AG">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small"  for="inputObjektbezeichnung">Objekt-Bezeichnung</label>
+                    <input id="inputObjektbezeichnung" name="objektBezeichnung" value="{{ calculation.objektBezeichnung }}" class="form-control" placeholder="z.B. Parkhaus Hospitalstraße">
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small"  for="inputStandort">Objekt-Standort</label>
+                    <input id="inputStandort" name="objektStandort" value="{{ calculation.objektStandort }}" class="form-control" placeholder="z.B. Hospitalstraße 8, 37073">
+                </div>
+            </div>
+            <div class="col-md-6"></div>
         </div>
        
-        <div>
-            <label for="inputObjektbezeichnung">Objekt-Bezeichnung</label>
-            <input id="inputObjektbezeichnung" name="objektBezeichnung" value="{{ calculation.objektBezeichnung }}">
-        </div>
-        <div>
-            <label for="inputStandort">Objekt-Standort</label>
-            <input id="inputStandort" name="objektStandort" value="{{ calculation.objektStandort }}">
-        </div>
-      
+        <hr>
         <h3>Gebäude & Ladeinfrastruktur</h3>
-        <div>
-            <label for="inputHausanschluss">Verfügbarer Leistung (HA oder UV) in kW</label>
-            <input type="number" id="inputHausanschluss" name="hausanschluss" step="0.1" min="0" value="{{ calculation.hausanschluss }}">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputHausanschluss">Verfügbarer Leistung (HA oder UV) in kW</label>
+                    <input type="number" id="inputHausanschluss" name="hausanschluss" step="0.1" min="0" value="{{ calculation.hausanschluss }}" class="form-control" placeholder="z.B. 143">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputGebäudelast">Maximale Gebäudelast in kW</label>
+                    <input type="number" id="inputGebäudelast" name="gebäudelast" step="0.1" min="0" value="{{ calculation.gebäudelast }}" class="form-control" placeholder="z.B. 71 (kleiner als verfügbare Leistung)">
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="inputGebäudelast">Maximale Gebäudelast in kW</label>
-            <input type="number" id="inputGebäudelast" name="gebäudelast" step="0.1" min="0" value="{{ calculation.gebäudelast }}">
-        </div>
+
+        
+        
         {% if calculation.anschlussLeistungLis %}
         <div>
-            <br>
+          
             <em>Ergibt: <strong>{{ calculation.anschlussLeistungLis }}</strong>  kW für Ladeinfrastruktur</em>
+           
         </div>
-        {% endif %}
         <br>
-        <div>
-            <label for="inputLeistungsfaktor">Leistungsfaktor</label>
-            <input type="number" id="inputLeistungsfaktor" name="leistungsfaktor" step="0.01" min="0" max="1" value="{{ calculation.leistungsfaktor }}">
+        {% endif %}
+       
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputLeistungsfaktor">Leistungsfaktor</label>
+                    <input type="number" id="inputLeistungsfaktor" name="leistungsfaktor" step="0.01" min="0" max="1" value="{{ calculation.leistungsfaktor }}" class="form-control" placeholder="z.B. 0.86 (maximal 1)">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small"  for="inputLadeleistungLis">Gewünschte AC-Ladeleistung pro LP in kW</label>
+                    <input type="number" id="inputLadeleistungLis" name="ladeleistungLis" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungLis }}" class="form-control" class="form-control" placeholder="z.B. 11 (maximal 22)">
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="inputLadeleistungLis">Verfügbare AC-Ladeleistung in kW</label>
-            <input type="number" id="inputLadeleistungLis" name="ladeleistungLis" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungLis }}">
-        </div>
+
         {% if calculation.anzahlStellplätzeStatisch %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.anzahlStellplätzeStatisch }}</strong> versorgbare Stellplätze im statischen Fall</em>
-        </div>
-        {% endif %}
+        </div> 
         
+        {% endif %}
+
+       
+        
+     
+        <hr>
         <h3>Fahrzeug & Fahrverhalten</h3>
-        <div>
-            <label for="inputJahresfahrleistung">Jährliche Fahrleistung in km</label>
-            <input type="number" id="inputJahresfahrleistung" name="jahresfahrleistung" step="1" min="0" value="{{ calculation.jahresfahrleistung }}">
+
+        <div class="row">
+            <div class="col-md-6"> 
+                <div class="form-group">
+                    <label class="small" for="inputJahresfahrleistung">Jährliche Fahrleistung in km</label>
+                    <input type="number" id="inputJahresfahrleistung" name="jahresfahrleistung" step="1" min="0" value="{{ calculation.jahresfahrleistung }}" class="form-control"  placeholder="z.B. 10.000">
+                </div>
+            </div>
+            <div class="col-md-6"> 
+                <div class="form-group">
+                    <label class="small" for="inputAnzahlTage">Anzahl Tage pro Jahr</label>
+                    <input type="number" id="inputAnzahlTage" name="anzahlTage" step="1" min="0" value="{{ calculation.anzahlTage }}" class="form-control" placeholder="z.B. 220 (maximal 365)">
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="inputAnzahlTage">Anzahl Tage pro Jahr (z.B. Werktage)</label>
-            <input type="number" id="inputAnzahlTage" name="anzahlTage" step="1" min="0" value="{{ calculation.anzahlTage }}">
-        </div>
+
         {% if calculation.tagesfahrleistung %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.tagesfahrleistung }}</strong> km tägliche Fahrleistung</em>
         </div>
-        {% endif %}
         <br>
-        <div>
-            <label for="inputEnergieverbrauchFahrzeug">Energieverbrauch in kWh/100 km</label>
-            <input type="number" id="inputEnergieverbrauchFahrzeug" name="energieverbrauchFahrzeug" step="1" min="0" value="{{ calculation.energieverbrauchFahrzeug }}">
+        {% endif %}
+       
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputEnergieverbrauchFahrzeug">Energieverbrauch in kWh/100 km</label>
+                    <input type="number" id="inputEnergieverbrauchFahrzeug" name="energieverbrauchFahrzeug" step="0.1" min="0" value="{{ calculation.energieverbrauchFahrzeug }}" class="form-control" placeholder="z.B. 19,2 ">
+                </div>
+            </div>
+            <div class="col-md-6"></div>
         </div>
+
         {% if calculation.nachladeBedarfTag %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.nachladeBedarfTag }}</strong> kWh täglichen Nachladebedarf</em>
         </div>
         {% endif %}
 
+        <hr>
        <h3>Ladezeit</h3>
-       <div>
-            <label for="inputLadeleistungFahrzeug">Fahrzeugseitige Ladeleistung in kW</label>
-            <input type="number" id="inputLadeleistungFahrzeug" name="ladeleistungFahrzeug" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungFahrzeug }}">
-        </div>
-        <div>
-            <label for="inputZusatzZeitLadeverlust">Zusatzzeit für Ladeverluste in h</label>
-            <input type="number" id="inputZusatzZeitLadeverlust" name="zusatzZeitLadeverlust" step="0.1" min="0" value="{{ calculation.zusatzZeitLadeverlust }}">
-        </div>
+
+       <div class="row">
+           <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputLadeleistungFahrzeug">Fahrzeugseitige Ladeleistung in kW</label>
+                    <input type="number" id="inputLadeleistungFahrzeug" name="ladeleistungFahrzeug" step="0.1" min="0" max="22" value="{{ calculation.ladeleistungFahrzeug }}" class="form-control" placeholder="z.B. 7,4 (maximal 22)">
+                </div>
+           </div>
+           <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputZusatzZeitLadeverlust">Zusatzzeit für Ladeverluste in h</label>
+                    <input type="number" id="inputZusatzZeitLadeverlust" name="zusatzZeitLadeverlust" step="0.1" min="0" value="{{ calculation.zusatzZeitLadeverlust }}" class="form-control" placeholder="z.B. 0,5">
+                </div>
+           </div>
+       </div>
+
         {% if calculation.nachladeBedarfZeit %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.nachladeBedarfZeit }}</strong> h zur Nachladung des täglichen Bedarfs</em>
         </div>
-        {% endif %}
         <br>
-        <div>
-            <label for="inputLadezeitraum">Verfügbarer Ladezeitraum in h</label>
-            <input type="number" id="inputLadezeitraum" name="ladezeitraum" step="0.1" min="0" value="{{ calculation.ladezeitraum }}">
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputLadezeitraum">Verfügbarer Ladezeitraum in h</label>
+                    <input type="number" id="inputLadezeitraum" name="ladezeitraum" step="0.1" min="0" value="{{ calculation.ladezeitraum }}" class="form-control" placeholder="z.B. 8 ">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputFahrzeugwechselZeit">Zeit zum Fahrzeugwechsel in h</label>
+                    <input type="number" id="inputFahrzeugwechselZeit" name="fahrzeugwechselZeit" step="0.01" min="0" value="{{ calculation.fahrzeugwechselZeit }}" class="form-control" placeholder="z.B. 0,25">
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="inputFahrzeugwechselZeit">Zeit zum Fahrzeugwechsel in h</label>
-            <input type="number" id="inputFahrzeugwechselZeit" name="fahrzeugwechselZeit" step="0.01" min="0" value="{{ calculation.fahrzeugwechselZeit }}">
-        </div>
+       
         {% if calculation.anzahlNachladungen %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.anzahlNachladungen }}</strong> mögliche Nachladungen an einem LP</em>
         </div>
         {% endif %}
 
+        <hr>
         <h3>Dynamisches Lastmanagement</h3>
-        <div>
-            <label for="inputNutzfaktor">Nutzfaktor (z.B. 0,7 privat; 0,9 gewerblich)</label>
-            <input type="number" id="inputNutzfaktor" name="nutzfaktor" step="0.01" min="0" max="1" value="{{ calculation.nutzfaktor }}">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small" for="inputNutzfaktor">Nutzfaktor</label>
+                    <input type="number" id="inputNutzfaktor" name="nutzfaktor" step="0.01" min="0" max="1" value="{{ calculation.nutzfaktor }}" class="form-control" placeholder="z.B. 0,9 gewerblich (maximal 1)">
+                </div>
+            </div>
+            <div class="col-md-6"></div>
         </div>
+
         {% if calculation.anzahlStellplätzeDynamisch %}
         <div>
-            <br>
             <em>Ergibt: <strong>{{ calculation.anzahlStellplätzeDynamisch }}</strong> garantiert versorgbare LP bzw. Stellplätze im dynamischen Fall</em>
         </div>
+        <br>
         {% endif %}
 
-        <br>
 
-        <button type="submit">Berechnen</button>
+        <button type="submit" class="btn btn-success">Berechnen</button>
 
    </form>
 
     {% if calculation.isExportable %}
 
-    <form action="/calculation/export" method="post" target="__blank">
+    <form action="/calculation/export" method="post" target="__blank" >
            
         <input type="hidden" name="ort" value="{{ calculation.ort }}">
         <input type="hidden" name="objektBezeichnung" value="{{ calculation.objektBezeichnung }}">
@@ -241,10 +314,15 @@
         <input type="hidden" name="nutzfaktor" value="{{ calculation.nutzfaktor }}">
         <input type="hidden" name="anzahlStellplätzeDynamisch" value="{{ calculation.anzahlStellplätzeDynamisch }}">
       
-        <button type="submit">PDF Export</button>
+        <button type="submit" class="btn btn-warning mt-3">PDF Export</button>
 
     </form>
 
+
     {% endif %}
+
+    <div style="height: 50px;">
+
+    </div>
    
 {% endblock %}

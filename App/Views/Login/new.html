@@ -7,16 +7,19 @@
     <h1>Login</h1>
 
     <form action="/login/create" method="post">
-        <div>
+
+        <div class="form-group">
             <label for="inputEmail">E-Mail Adresse</label>
-            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" autofocus value="{{ email }}"/>
-        </div>
-        <div>
-            <label for="inputPassword">Passwort</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Passwort" />
+            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" autofocus value="{{ email }}" class="form-control"/>
         </div>
 
-        <button type="submit">Einloggen</button>
+        <div class="form-group">
+            <label for="inputPassword">Passwort</label>
+            <input type="password" id="inputPassword" name="password" placeholder="Passwort" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Einloggen</button>
+        
     </form>
 
 {% endblock %}

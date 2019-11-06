@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Nutzer{% endblock %}
+{% block title %}Nutzerverwaltung{% endblock %}
 
 {% block body %}
 
-    <h1>Nutzer löschen</h1>
+    <h1>Nutzerverwaltung</h1>
+    <hr>
 
     <form method="post" action="/signup/{{ user.id }}/confirmDeletion" id="formDelete">
 
         <p><strong>Name:</strong> {{ user.name }}</p>
         <p><strong>E-Mail:</strong>  {{ user.email }}</p>
         
-        <button type="submit">Löschen</button>
-        <a href="/admin/show-users">Zurück</a>
+        <button type="submit" class="btn btn-warning">Löschen</button>
+        <a href="/admin/show-users" class="btn btn-sm btn-default btn-light">Zurück</a>
 
     </form>
 

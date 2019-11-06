@@ -84,22 +84,22 @@
 
     <form method="post" action="/profile/update" id="formProfile">
 
-        <div>
+        <div class="form-group">
             <label for="inputName">Name</label>
-            <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required/>
+            <input id="inputName" name="name" placeholder="Name" value="{{ user.name }}" required class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="inputEmail">E-Mail-Adresse</label>
-            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" value="{{ user.email }}" required/>
+            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" value="{{ user.email }}" required class="form-control"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="inputPassword">Passwort</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Passwort" aria-describedby="helpBlock"/>
-            <span id="helpBlock">Frei lassen um bestehendes Passwort zu behalten</span>
+            <input type="password" id="inputPassword" name="password" placeholder="Passwort" aria-describedby="helpBlock" class="form-control"/>
+            <small id="helpBlock" class="form-text text-muted text-small">Frei lassen um bestehendes Passwort zu behalten</small>
         </div>
       
-        <button type="submit">Speichern</button>
-        <a href="/profile/show">Zurück</a>
+        <button type="submit" class="btn btn-default">Speichern</button>
+        <a href="/profile/show" class="btn btn-sm btn-default btn-light">Zurück</a>
 
     </form>
 

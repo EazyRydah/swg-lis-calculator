@@ -50,7 +50,7 @@ class PDF extends \Core\Controller
 
             Flash::addMessage('Änderung gespeichert');
 
-            $this->redirect('/admin');
+            $this->redirect('/admin/show-pdf');
 
         } else {
 
