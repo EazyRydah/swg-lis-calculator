@@ -6,17 +6,22 @@
 
     <h1>Administration</h1>
 
-    <a href="/signup/new">Neuen Benutzer anlegen</a>
-    <a href="/pdf/new">PDF Anhang</a>
+    
+    <div>
+        <a href="/admin/show-users">Nutzerverwaltung</a>
+    </div>
 
-    {% if users %}
+    <div>
+        <a href="/admin/show-pdf">PDF Anhang</a>
+    </div>
 
-        <h3>Alle Nutzer</h3>
 
-        {% for user in users %}
-            <li><a href="/signup/{{ user.id }}/delete">{{ user.name|e }}</a></li>
-        {% endfor %}
 
-    {% endif %}
+    
+
+
+
+
+    
     
 {% endblock %}

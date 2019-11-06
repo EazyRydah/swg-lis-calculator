@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\User;
+use \App\Models\PDFDocument;
 
 /**
  * Admin controller
@@ -31,12 +32,19 @@ class Admin extends \Core\Controller
     public function indexAction()
     {
 
-        $users = User::getAll();
+       
             
-        View::renderTemplate('Admin/index.html', [
-            'users' => $users
-        ]);     
+        View::renderTemplate('Admin/index.html');     
         
+    }
+
+    public function showUsersAction()
+    {
+        $users = User::getAll();
+
+        View::renderTemplate('Signup/new.html', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -45,8 +53,14 @@ class Admin extends \Core\Controller
      * @return void
      *   
     */  
-    public function uploadPDFAction()
+    public function showPDFAction()
     {
-        View::renderTemplate('PDF/upload.html');
+        
+        View::renderTemplate('PDF/index.html', [
+        
+            'attachmentExists' => PDFDocument::attachmentExists()
+            
+        ]);
+
     }
 }

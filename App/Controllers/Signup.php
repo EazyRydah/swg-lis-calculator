@@ -45,7 +45,7 @@ class Signup extends \Core\Controller
 
         if ($user->save()) {
             
-            $this->redirect('/signup/success');
+            $this->redirect('/admin/show-users');
 
         } else {
 
@@ -85,13 +85,13 @@ class Signup extends \Core\Controller
 
         if ($user->id == $_SESSION['user_id']) {
             Flash::addMessage('Der Administrator kann nicht gelöscht werden.');
-            $this->redirect('/admin');
+            $this->redirect('/admin/show-users');
 
         } else {
             $user->delete();
         }
 
-        $this->redirect('/admin');
+        $this->redirect('/admin/show-users');
     }
 
    

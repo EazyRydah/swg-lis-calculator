@@ -63,7 +63,7 @@
 
 {% block body %}
 
-    <h1>Nutzer anlegen</h1>
+    <h1>Nutzerverwaltung</h1>
 
     {% if user.errors is not empty %}
         <p>Warnung:</p>
@@ -74,19 +74,19 @@
         </ul>
     {% endif %}
 
-    <form method="post" action="/signup/create" id="formSignup">
+    <form method="post" action="/signup/create" id="formSignup" >
 
         <div>
             <label for="inputName">Name</label>
-            <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required/>
+            <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required />
         </div>
         <div>
             <label for="inputEmail">E-Mail-Adresse</label>
-            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" value="{{ user.email }}" required/>
+            <input type="email" id="inputEmail" name="email" placeholder="E-Mail-Adresse" value="{{ user.email }}" required />
         </div>
         <div>
             <label for="inputPassword">Passwort</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Passwort" required/>
+            <input type="password" id="inputPassword" name="password" placeholder="Passwort" required autocomplete="new-password"/>
         </div>
       
 
@@ -94,5 +94,16 @@
         <a href="/admin">Zurück</a>
 
     </form>
+
+    
+    {% if users %}
+
+        <h3>Alle Nutzer</h3>
+
+        {% for user in users %}
+            <li><a href="/signup/{{ user.id }}/delete">{{ user.name|e }}</a></li>
+        {% endfor %}
+
+    {% endif %}
 
 {% endblock %}

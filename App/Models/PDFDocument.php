@@ -5,8 +5,6 @@ namespace App\Models;
 use \App\Auth;
 use TCPDF;
 use setasign\Fpdi\Tcpdf\fpdi;
-use setasign\Fpdi\PdfReader;
-
 
 /**
  * PDFDocument model
@@ -294,20 +292,9 @@ class PDFDocument extends \Core\Model
             
         }
            
-
-       
-
         //Variante 1: PDF direkt an den Browser senden:
         $pdf->Output($pdfName, 'I');
              
     }
-
-
-   
-
-
-
-  
-
 }
 

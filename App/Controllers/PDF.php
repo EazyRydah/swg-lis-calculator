@@ -32,9 +32,7 @@ class PDF extends \Core\Controller
     */  
     public function newAction()
     {
-        View::renderTemplate('PDF/new.html', [
-            'attachmentExists' => PDFDocument::attachmentExists()
-        ]);
+        View::renderTemplate('PDF/new.html');
     }
 
     /**
@@ -56,7 +54,7 @@ class PDF extends \Core\Controller
 
         } else {
 
-            View::renderTemplate('PDF/new.html', [
+            View::renderTemplate('PDF/index.html', [
                 'pdf' => $pdf
             ]);
 
@@ -80,7 +78,7 @@ class PDF extends \Core\Controller
 
             Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
 
-            View::renderTemplate('PDF/new.html');
+            View::renderTemplate('/admin/show-pdf');
 
         }
     }
@@ -97,13 +95,13 @@ class PDF extends \Core\Controller
 
             PDFDocument::deleteAttachment();
 
-            $this->redirect('/pdf/new');
+            $this->redirect('/admin/show-pdf');
 
         } else {
 
             Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
 
-            View::renderTemplate('PDF/new.html');
+            View::renderTemplate('/admin/show-pdf');
 
         }
     }    
