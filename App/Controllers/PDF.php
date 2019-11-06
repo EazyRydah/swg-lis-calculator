@@ -107,4 +107,9 @@ class PDF extends \Core\Controller
 
         }
     }    
+
+    public function test()
+    {
+        PDFDocument::test();
+    }
 }

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use \App\Auth;
 use TCPDF;
+use setasign\Fpdi\Tcpdf\fpdi;
+use setasign\Fpdi\PdfReader;
+
 
 /**
  * PDFDocument model
@@ -239,7 +242,7 @@ class PDFDocument extends \Core\Model
     public static function exportToBrowser($pdfName, $html)
     {
        
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new FPDI(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // document information
         $pdf->SetCreator(PDF_CREATOR);
@@ -272,18 +275,35 @@ class PDFDocument extends \Core\Model
         // Schriftart
         $pdf->SetFont('dejavusans', '', 10);
 
-        // Neue Seite
+        // Neue Seite 
         $pdf->AddPage();  
-
+        // Write HTML to new page
         $pdf->writeHTML($html, true, false, true, false, '');
 
-        //Variante 1: PDF direkt an den Benutzer senden:
+        // Add Attachment if exists
+        
+        if (self::attachmentExists()) {
+
+            $pageCount = $pdf->setSourceFile('./uploads/statistik-anhang.pdf');
+            
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $pageId = $pdf->importPage($i, '/MediaBox');
+                $pdf->AddPage();
+                $pdf->useTemplate($pageId);
+            }
+            
+        }
+           
+
+       
+
+        //Variante 1: PDF direkt an den Browser senden:
         $pdf->Output($pdfName, 'I');
              
     }
 
 
-
+   
 
 
 

@@ -12,6 +12,10 @@ class ComposerStaticInit7c0baa335460178fecca298af007aa1c
     );
 
     public static $prefixLengthsPsr4 = array (
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'T' => 
         array (
             'Twig\\' => 5,
@@ -32,6 +36,10 @@ class ComposerStaticInit7c0baa335460178fecca298af007aa1c
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
