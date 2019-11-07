@@ -68,7 +68,6 @@ class Auth
             return true;
         }
         
-        // Flash::addMessage('Erfolgreich eingeloggt.');
         return false;
     }
 

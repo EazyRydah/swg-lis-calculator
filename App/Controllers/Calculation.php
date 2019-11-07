@@ -22,7 +22,17 @@ class Calculation extends Authenticated
     */ 
     public function indexAction()
     {
-        View::renderTemplate('Calculation/index.html');
+        if (isset($_SESSION['current_calculation'])) {
+
+            View::renderTemplate('Calculation/index.html', [
+                'calculation' => $_SESSION['current_calculation']
+            ]);
+
+        } else {
+
+            View::renderTemplate('Calculation/index.html');
+
+        }
     }
 
     /**
@@ -36,6 +46,8 @@ class Calculation extends Authenticated
 
         if ($calculation->calculate()) {
 
+            $_SESSION['current_calculation'] = $calculation;
+            
             View::renderTemplate('Calculation/index.html', [
                 'calculation' => $calculation
             ]);

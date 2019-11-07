@@ -1,3 +1,40 @@
+
+ html {
+     font-size: 1rem;
+ }
+
+/* Small */
+/* @media (min-width: 576px) {
+    html {
+      font-size: 1rem;
+    }
+ 
+} */
+
+/* Medium */
+/*  @media (min-width: 768px) {
+   html {
+     font-size: 1.2rem;
+   }
+
+ }
+  */
+  /* large */
+/*  @media (min-width: 991px) {
+     html {
+     font-size: 1.4rem;
+   }
+
+ } */
+ 
+ /* Extra large */
+/*  @media (min-width: 1200px) {
+    html {
+        font-size: 1.6rem;
+      }
+ } */
+
+
 .alert {
     border: 1px solid #ccc;
     padding: 6px;

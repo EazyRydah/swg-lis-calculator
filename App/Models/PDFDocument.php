@@ -4,7 +4,6 @@ namespace App\Models;
 
 use \App\Auth;
 use tcpdf;
-// use setasign\fpdi\Tcpdf\Fpdi;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
 /**
@@ -170,6 +169,16 @@ class PDFDocument extends \Core\Model
     {
         $headerLogo1 = '<img src="/img/swg_climate_change.png">';
         $headerLogo2 = '<img src="/img/swg_logo.png">';
+
+        $user = Auth::getUser();
+
+        $salutation = 'i.A.';
+
+        if ($user->is_admin) {
+
+            $salutation = 'i.V.';
+
+        }
     
         $date = date("d.m.Y");
          
@@ -224,7 +233,7 @@ class PDFDocument extends \Core\Model
         <p><span style="font-weight: bold">Hinweis: </span> <em>Alle Angaben beruhen auf erfahrungsbasierten Annahmen und dienen lediglich zur Orientierung bei der Auslegung von Ladeinfrastruktur.</em></p>
        
         <p style="font-weight: bold">Mit freundlichen Grüßen</p>
-        <br><br>i.A. '.Auth::getUser()->name . '<br><br>Ihr E-Mobilitätsteam der Stadtwerke Göttingen';
+        <br><br>'.$salutation .' '. $user->name . '<br><br>Ihr E-Mobilitätsteam der Stadtwerke Göttingen';
 
         return $html;
 

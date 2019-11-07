@@ -78,7 +78,7 @@ class Pdf extends \Core\Controller
 
             Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
 
-            View::renderTemplate('/admin/show-pdf');
+            $this->redirect('/admin/show-pdf');
 
         }
     }
@@ -95,19 +95,17 @@ class Pdf extends \Core\Controller
 
             PDFDocument::deleteAttachment();
 
+            Flash::addMessage('Änderung gespeichert');
+
             $this->redirect('/admin/show-pdf');
 
         } else {
 
             Flash::addMessage('Kein Anhang vorhanden', Flash::INFO);
 
-            View::renderTemplate('/admin/show-pdf');
+            $this->redirect('/admin/show-pdf');
 
         }
     }    
 
-    public function test()
-    {
-        PDFDocument::test();
-    }
 }

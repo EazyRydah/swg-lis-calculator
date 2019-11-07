@@ -15,14 +15,14 @@
 
 <div class="container">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="/">
             <img src="/img/swg_logo.png" height="70" width="auto" 
             class="d-none d-md-inline-block align-top" alt="">
             <img src="/img/swg_logo.png" height="40" width="auto" 
             class=" d-inline-block d-md-none align-top" alt="">
         </a>
-       
+        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,12 +31,12 @@
                 {% if current_user %}
                 
                     {% if current_user.is_admin %}
-                         <a class="nav-item nav-link" href="/admin">Administration</a>
+                            <a class="nav-item nav-link" href="/admin">Administration</a>
                     {% endif %}
                     <a class="nav-item nav-link" href="/calculation">LIS Berechnung</a>
                     <a class="nav-item nav-link" href="/profile">Profil</a>
                     <a class="nav-item nav-link" href="/logout">Ausloggen</a>
-             
+                
                 {% else %}
 
                 <a class="nav-item nav-link" href="/login">Einloggen</a>
@@ -45,6 +45,10 @@
         </div>
         
     </nav>
+
+
+
+  
     
 <!-- 
         <nav>

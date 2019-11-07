@@ -51,7 +51,7 @@ class Admin extends \Core\Controller
      * @return void
      *   
     */  
-    public function showPDFAction()
+    public function showPdfAction()
     {
         
         View::renderTemplate('Pdf/index.html', [
