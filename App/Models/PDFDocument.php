@@ -4,7 +4,7 @@ namespace App\Models;
 
 use \App\Auth;
 use TCPDF;
-use setasign\Fpdi\Tcpdf\fpdi;
+use \setasign\Fpdi\Tcpdf\fpdi;
 
 /**
  * PDFDocument model
