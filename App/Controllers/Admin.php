@@ -32,8 +32,6 @@ class Admin extends \Core\Controller
     public function indexAction()
     {
 
-       
-            
         View::renderTemplate('Admin/index.html');     
         
     }
@@ -56,7 +54,7 @@ class Admin extends \Core\Controller
     public function showPDFAction()
     {
         
-        View::renderTemplate('PDF/index.html', [
+        View::renderTemplate('Pdf/index.html', [
         
             'attachmentExists' => PDFDocument::attachmentExists()
             

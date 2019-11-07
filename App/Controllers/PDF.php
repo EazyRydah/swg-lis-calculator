@@ -13,7 +13,7 @@ use \App\Flash;
  * 
  * PHP version 7.0
 */  
-class PDF extends \Core\Controller
+class Pdf extends \Core\Controller
 {
     /**
      * Require the user to be an admin before giving access to all methods in the controller
@@ -32,7 +32,7 @@ class PDF extends \Core\Controller
     */  
     public function newAction()
     {
-        View::renderTemplate('PDF/new.html');
+        View::renderTemplate('Pdf/new.html');
     }
 
     /**
@@ -54,7 +54,7 @@ class PDF extends \Core\Controller
 
         } else {
 
-            View::renderTemplate('PDF/index.html', [
+            View::renderTemplate('Pdf/index.html', [
                 'pdf' => $pdf
             ]);
 
